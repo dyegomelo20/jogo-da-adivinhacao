@@ -164,6 +164,25 @@ body {
     gap: 10px; 
 }
 
+#recorde-game{
+    position: absolute;
+    right: 10px;
+    top: 20px;
+    width: 100%;
+    max-width: 200px;
+    background-color: #ddd;
+    text-align: center;
+    padding: 1rem;
+    border: 1px solid #000;
+    border-radius: 10px;
+    transform: translateX(250px);
+    transition: 1s;
+}
+
+.recorde-novo{
+    background-color: #45ff55 !important;
+}
+
 .oculta{
 display: none;
 }
@@ -181,10 +200,10 @@ display: none;
     
 }
 .aparece {
-animation: mensagem 1s forwards;
+animation: mostra 1s forwards;
 }
 
-@keyframes mensagem {
+@keyframes mostra {
     to {
         transform: translateX(0);
     }
