@@ -21,6 +21,8 @@ let melhoResultado = 1
 
 let numerosDigitados = []
 
+let statusGame = false
+
 //funções 
 const geraNumero = () => Math.floor(Math.random() * 100 + 1)
 
@@ -40,8 +42,9 @@ const verificaNumber = (number) => {
         melhoResultado++
     }
     tentativas--
+
     verificaTentativa(tentativas)
-    console.log(melhoResultado)
+   numerosDigitados.push(number)
 }
 
 const dicaDoJogo = (dica, number ) => {
@@ -57,6 +60,7 @@ const gameGin = () => {
     dicasContainer.insertBefore(p, dicasContainer.firstChild)
     btnVerifica.classList.add("oculta")
     btnvoltaGame.classList.remove("oculta")
+    statusGame = false
     verificaRecordeAtual(melhoResultado)
 }
 
@@ -68,6 +72,7 @@ const verificaTentativa = (tentativas) => {
         dicasContainer.innerHTML = `<span>Você esgotou todas as tentativas. O número correto era ${numeroGame}. Tente novamente em outro jogo!</span>`;
         btnVerifica.classList.add("oculta")
     btnvoltaGame.classList.remove("oculta")
+    statusGame = false
     }
 
 }
@@ -128,6 +133,7 @@ btnStart.addEventListener("click", () => {
     tentativas = 15
     recordeDoUsuario()
     melhoResultado = 1
+    statusGame = true
 
 })
 btnInfor.addEventListener("click", () => {
@@ -172,11 +178,12 @@ inputValue.addEventListener("input", (e) => {
 })
 
 
-// inputValue.addEventListener("keydown", (e) => {
-//     if(e.key ==="Enter") {
-//         btnVerifica.dispatchEvent(new Event("click"))
-//     }
-// })
+inputValue.addEventListener("keydown", (e) => {
+    if (!statusGame) return
+    if(e.key ==="Enter") {
+        btnVerifica.dispatchEvent(new Event("click"))
+    }
+})
 
 
 //  localstorage
