@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jogo de Adivinhação</title>
+    <link rel="stylesheet" href="styles/style.css">
+    <script src="scripts/script.js" defer></script>
+</head>
+<body>
+    <div class="mensagem"><p>Não aceita letras ou numenros maiores que 100 ou negativo</p></div>
+    <main class="container-box">
+        <section class="menu-game">
+            <h1>Jogo de Adivinhação</h1>
+            <button id="btn-start">Começa Jogo</button>
+            <button id="btn-info">Infomações do jogo</button>
+        </section>
+        <section class="info-game oculta">
+            <h2>Regras do jogo</h2>
+            <p>
+            🎯 <strong>Objetivo:</strong> Tente adivinhar o número secreto gerado automaticamente pelo sistema. Ele estará entre <strong>1 e 100</strong>.
+            </p>
+            <p>
+            ➡️ Você terá no máximo <strong>15 tentativas</strong> para acertar o número.
+            </p>
+            <p>
+            ⌨️ Digite um número no campo indicado e clique em <strong>"Tentar"</strong>.
+            </p>
+            <p>
+            💡 O jogo dará dicas após cada tentativa:
+            </p>
+            <ul>
+                <li>🔺 "O número é maior" se o valor for muito baixo.</li>
+                <li>🔻 "O número é menor" se for muito alto.</li>
+                <li>✅ "Você acertou!" quando encontrar o número correto.</li>
+            </ul>
+            <p>
+            ❌ Se usar as 15 tentativas e não acertar, o jogo termina e mostrará o número correto.
+            </p>
+            <p>
+            🔁 Após o fim do jogo, clique em <strong>"Voltar ao menu"</strong> e depois em <strong>"Começar"</strong> para jogar novamente.
+            </p>
+            <button id="btn-menu">Voltar ao menu</button>
+        </section>
+        <section class="game oculta">
+            <h2>Adivinhe o numero</h2>
+            <p>Digite um numero de 0 a 100</p>
+            <p id="tentativa"></p>
+            <input type="number" id="input-number" placeholder="Digite um numero">
+            <div class="btn-container">
+                <button id="btn-game-menu" class="oculta">voltar ao menu</button>
+                <button id="btn-verifica">Tenta</button>
+            </div>
+            <div class="dicas">
+                <!-- <p>o seu numero é > que x</p> -->
+            </div>
+        </section>
+    </main>
+</body>
+</html>
