@@ -15,6 +15,11 @@ body {
   animation: animarFundo 15s ease infinite;
 }
 
+html, body {
+    overflow-x: hidden;
+}
+
+
 /* Animação suave no gradiente */
 @keyframes animarFundo {
   0% { background-position: 0% 50%; }
@@ -22,6 +27,9 @@ body {
   100% { background-position: 0% 50%; }
 }
 
+main{
+    width: 100%;
+}
 
 /* menu do jogo */
  .menu-game{
@@ -165,11 +173,10 @@ body {
 }
 
 #recorde-game{
-    position: absolute;
+    position: fixed;
     right: 10px;
     top: 20px;
-    width: 100%;
-    max-width: 200px;
+    width: 200px;
     background-color: #ddd;
     text-align: center;
     padding: 1rem;
@@ -213,4 +220,22 @@ span{
     padding: 20px;
     background-color: #ff4634;
     border-radius: 10px;
+}
+
+/* responsivo */
+
+@media (max-width:600px) {
+    .menu-game{
+        width: 95%;
+        height: auto;
+    }
+    .menu-game h1{
+        font-size: 1.5rem;
+    }
+    .menu-game button{
+        margin-bottom: 1rem;
+    }
+    .info-game{
+        width: 95%;
+    }
 }
