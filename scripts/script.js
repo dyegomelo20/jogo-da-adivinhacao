@@ -1,4 +1,4 @@
-// seleção de elementos 
+// Seleção dos elementos do DOM
 const btnStart = document.querySelector("#btn-start")
 const btnInfor = document.querySelector("#btn-info")
 const btnVoltaInfo = document.querySelector("#btn-menu")
@@ -10,33 +10,33 @@ const gameContainer = document.querySelector(".game")
 const dicasContainer = document.querySelector(".dicas")
 const inputValue = document.querySelector("#input-number")
 const tentativasDom = document.querySelector("#tentativa")
-const recordeConatiner = document.querySelector("#recorde-game")
+const recordeContainer = document.querySelector("#recorde-game")
 
-//Variavel 
-let numeroGame
+// Variáveis globais do jogo
+let numeroGame // Número secreto gerado para o jogo
+let tentativas // Tentativas restantes do jogador
+let melhoResultado = 1 // Melhor resultado do jogador (menor número de tentativas)
+let numerosDigitados = [] // Números já digitados pelo jogador
+let statusGame = false // Status do jogo (ativo ou não)
 
-let tentativas
-
-let melhoResultado = 1
-
-let numerosDigitados = []
-
-let statusGame = false
-
-//funções 
+// Função para gerar um número aleatório entre 1 e 100
 const geraNumero = () => Math.floor(Math.random() * 100 + 1)
 
+// Função principal para verificar o número digitado pelo usuário
 const verificaNumber = (number) => {
+    // Se acertou o número
     if (number === numeroGame) {
-        console.log("acertou")
+    // ...
         dicasContainer.innerHTML = ""
-        gameGin(number)
+        gameGin()
         return
     }
+    // Se o número é maior que o número secreto
     if (number > numeroGame) {
         dicaDoJogo(">", number)
         melhoResultado++
     }
+    // Se o número é menor que o número secreto
     if (number < numeroGame) {
         dicaDoJogo("<", number)
         melhoResultado++
@@ -44,16 +44,17 @@ const verificaNumber = (number) => {
     tentativas--
 
     verificaTentativa(tentativas)
-   numerosDigitados.push(number)
+    numerosDigitados.push(number)
 }
 
+// Exibe uma dica para o jogador após cada tentativa
 const dicaDoJogo = (dica, number ) => {
     const p = document.createElement("p")
-    p.innerText = `O seu numero ${number} é ${dica} X `
+    p.innerText = `O seu número ${number} é ${dica} X `
     dicasContainer.insertBefore(p, dicasContainer.firstChild)
-    
 }
 
+// Função chamada quando o jogador acerta o número
 const gameGin = () => {
     const p = document.createElement("p")
     p.innerText = `🎉 Você acertou! O número era ${numeroGame}.`
@@ -64,22 +65,23 @@ const gameGin = () => {
     verificaRecordeAtual(melhoResultado)
 }
 
+// Atualiza o número de tentativas restantes e verifica se o jogo acabou
 const verificaTentativa = (tentativas) => {
-    tentativasRestantes = tentativas
-    tentativasDom.innerText = `Você tem ${tentativasRestantes} tentativas Restantes`
+    let tentativasRestantes = tentativas
+    tentativasDom.innerText = `Você tem ${tentativasRestantes} tentativas restantes`
     if (tentativasRestantes === 0){
         dicasContainer.innerHTML = ""
         dicasContainer.innerHTML = `<span>Você esgotou todas as tentativas. O número correto era ${numeroGame}. Tente novamente em outro jogo!</span>`;
         btnVerifica.classList.add("oculta")
-    btnvoltaGame.classList.remove("oculta")
-    statusGame = false
+        btnvoltaGame.classList.remove("oculta")
+        statusGame = false
     }
-
 }
 
+// Verifica se o número já foi digitado anteriormente pelo jogador
 const verificaNumerosDigitados = (number) => {
     const numeros = numerosDigitados
-    console.log("ok")
+    // ...
     const p = document.createElement("p")
     p.innerHTML = `⚠️ Você já tentou o número ${number}. Tente outro!`
 
@@ -87,65 +89,67 @@ const verificaNumerosDigitados = (number) => {
         dicasContainer.insertBefore(p, dicasContainer.firstChild)
         return true
     }
-
-    
 }
 
+// Exibe o recorde atual do usuário na tela
 const recordeDoUsuario = () => {
     const recordeAtual = getRecorde()
     if(!recordeAtual) return
-    recordeConatiner.classList.add("aparece")
-    recordeConatiner.querySelector("h3").innerText = recordeAtual
-    recordeConatiner.querySelector("p").innerText = "Seu recorde atual"
+    recordeContainer.classList.add("aparece")
+    recordeContainer.querySelector("h3").innerText = recordeAtual
+    recordeContainer.querySelector("p").innerText = "Seu recorde atual"
     setTimeout(() => {
-        recordeConatiner.classList.remove("aparece")
+        recordeContainer.classList.remove("aparece")
     }, 5000)
 }
 
+// Verifica se o jogador bateu o recorde e atualiza se necessário
 const verificaRecordeAtual = (recorde) => {
     const recordeAtual = getRecorde()
-    
+    // Se não há recorde salvo, ou o novo recorde é melhor
     if(!recordeAtual) {}
     else if (recordeAtual < recorde || recordeAtual === recorde) return
 
+    setRecorde(recorde)
+    recordeContainer.querySelector("h3").innerText =  `${recorde}° tentativa`
+    recordeContainer.querySelector("p").innerText = "Parabéns, novo recorde! Acertou na"
 
-        setRecode(recorde)
-        recordeConatiner.querySelector("h3").innerText =  `${recorde}° tentativa`
-        recordeConatiner.querySelector("p").innerText = "Parabens novo recorde. acertou na"
-
-        recordeConatiner.classList.add("aparece")
-        recordeConatiner.classList.add("recorde-novo")
-        setTimeout(() => {
-        recordeConatiner.classList.remove("recorde-novo")
-        recordeConatiner.classList.remove("aparece")
+    recordeContainer.classList.add("aparece")
+    recordeContainer.classList.add("recorde-novo")
+    setTimeout(() => {
+        recordeContainer.classList.remove("recorde-novo")
+        recordeContainer.classList.remove("aparece")
     }, 5000)
 }
 
 
 
 
-//Eventos
+// Eventos dos botões e inputs
+// Inicia o jogo quando o botão "Começar Jogo" é clicado
 btnStart.addEventListener("click", () => {
     numeroGame = geraNumero()
-    console.log(numeroGame)
+    // ...
     menuContainer.classList.add("oculta")
     gameContainer.classList.remove("oculta")
     tentativas = 15
     recordeDoUsuario()
     melhoResultado = 1
     statusGame = true
-
 })
+// Mostra as informações do jogo
 btnInfor.addEventListener("click", () => {
     menuContainer.classList.add("oculta")
     infoContainer.classList.remove("oculta")
 })
 
+// Volta ao menu principal a partir das informações
 btnVoltaInfo.addEventListener("click", () => {
     menuContainer.classList.remove("oculta")
     infoContainer.classList.add("oculta")
 })
 
+// Verifica o número digitado quando o botão "Tentar" é clicado
 btnVerifica.addEventListener("click", () => {
     const numberInput = +inputValue.value
     if(!numberInput) return
@@ -153,6 +157,7 @@ btnVerifica.addEventListener("click", () => {
     verificaNumber(numberInput)
 })
 
+// Volta ao menu principal após o fim do jogo
 btnvoltaGame.addEventListener("click", () => {
     btnVerifica.classList.remove("oculta")
     btnvoltaGame.classList.add("oculta")
@@ -164,11 +169,12 @@ btnvoltaGame.addEventListener("click", () => {
     numerosDigitados = []
 })
 
+// Valida o valor digitado no input para garantir que está entre 1 e 100
 inputValue.addEventListener("input", (e) => {
     const valor = e.target.value
     const mensagem = document.querySelector(".mensagem")
     if(valor > 100 || valor < 0) {
-        console.log("teste")
+    // ...
         mensagem.classList.add("aparece")
         setTimeout(() => {
             mensagem.classList.remove("aparece")
@@ -178,6 +184,7 @@ inputValue.addEventListener("input", (e) => {
 })
 
 
+// Permite que o jogador pressione Enter para tentar o número
 inputValue.addEventListener("keydown", (e) => {
     if (!statusGame) return
     if(e.key ==="Enter") {
@@ -186,15 +193,12 @@ inputValue.addEventListener("keydown", (e) => {
 })
 
 
-//  localstorage
-
+// Funções para manipular o recorde no localStorage
 function getRecorde ()  {
     const recorde = JSON.parse(localStorage.getItem("recorde"))
     return recorde
 }
 
-
-function setRecode  (save) {
-    const recorde = getRecorde()
+function setRecorde  (save) {
     localStorage.setItem("recorde", JSON.stringify(save))
 }
